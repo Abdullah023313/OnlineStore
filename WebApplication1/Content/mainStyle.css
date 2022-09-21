@@ -1,0 +1,68 @@
+﻿/* Start Variables */
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,900;1,200&display=swap');
+
+:root {
+    --text-color: #383635;
+    --text-color-light: #666;
+    --main-duration: 0.5s;
+    --main-color: #2980b9;
+    --orange: #f39c12;
+    --red: #e74c3c;
+    --black: #333;
+    --white: #fff;
+    --light-bg: #eee;
+    --border: .2rem solid var(--black);
+    --box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .1);
+}
+
+
+/* End Variables */
+
+* {
+    font-family: 'Nunito', sans-serif;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    text-decoration: none;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 62.5%;
+}
+
+body {
+    background-color: var(--light-bg);
+}
+
+center th {
+    font-size: 14px;
+    padding-right: 8px;
+    padding-bottom: 10px;
+}
+
+center td {
+    padding-right: 8px;
+    padding-bottom: 5px;
+}
+
+.arrow {
+    position: fixed;
+    padding: 12px 15px;
+    background-color: var(--main-color);
+    border-radius: 50%;
+    text-align: center;
+    border: #fff solid 2px;
+    right: 20px;
+    top: 50px;
+}
+
+    .arrow:hover {
+        cursor: pointer;
+    }
+
+    .arrow i {
+        font-size: 20px;
+        color: #fff;
+    }

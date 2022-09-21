@@ -1,0 +1,86 @@
+﻿@using WebApplication1.Models;
+
+
+<div class="Page_details">
+    <a href="~/Default/Index" class="arrow">
+        <i class="fas fa-arrow-right"></i>
+    </a>
+    <div class="product-imgs">
+        <div class="img-display">
+            <img id="main-img" src=~/images/@ViewBag.mainImg alt=" image">
+        </div>
+        <div class="img-select">
+            @foreach (TBImage image in Model.productImages)
+            {
+                <img onclick="SelectImage('@image.pathImage')" src=~/images/@image.pathImage alt=" image">
+            }
+
+        </div>
+    </div>
+
+    @{TBProduct product = Model.item;
+        <div class="product-content">
+            <h2 class="product-title">@product.name</h2>
+
+            <div class="product-rating">
+                @for (int i = 0; i < @product.rate; i++)
+                {
+                    <i class="fas fa-star"></i>
+                }
+                @for (int i = 0; i < 5 - @product.rate; i++)
+                {
+                    <i class="far fa-star"></i>
+                }
+                <span>(@Model.countRate)</span>
+            </div>
+
+            <div class="product-price">
+                <p class="price">company: <span>@product.company</span></p>
+                <p class="price">Price: <span>@product.sellingPrice</span></p>
+                <p class="price">
+                    Colors:
+                    @foreach (TBColor color in Model.productColors)
+                    {
+                        if (color.IdProduct == product.IdProduct)
+                        {
+                            <span class="circle" style="background-color:@color.code"></span>
+                        }
+                    }
+            </div>
+
+            <div class="product-detail">
+                <h2>about this item: </h2>
+                <p>@product.description</p>
+            </div>
+
+            @*<div class="social-links">
+
+                <a href="#">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="#">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="#">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="#">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="#">
+                    <i class="fab fa-pinterest"></i>
+                </a>
+            </div>*@
+        </div>
+    }
+    @if (Model.x)
+    {
+        @Html.ActionLink("Rate", "rate", new { IdProduct = product.IdProduct } ,new { @class = "button" })
+    }
+    
+    @Html.ActionLink("Add Cart", "addCart", new { IdProduct = product.IdProduct }, new { @class = "button" })
+</div>
+
+
+
+

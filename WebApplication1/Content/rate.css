@@ -1,0 +1,112 @@
+﻿.rate {
+    width: 100vw;
+    height: 100vh;
+    background-color: #36096d;
+    background-image: linear-gradient(315deg, #36096d 0%, #37d5d6 74%);
+}
+
+.star-widget {
+    position: absolute;
+    width: 331px;
+    height: 268px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.star-widget input {
+    display: none;
+}
+
+.star-widget label {
+    font-size: 40px;
+    color: #fefefe;
+    padding: 10px;
+    float: right;
+    transition: all 0.2s ease;
+}
+
+.star-widget input:not(:checked)~label:hover,
+.star-widget input:not(:checked)~label:hover~label {
+    color: #fd1;
+}
+
+.star-widget input:checked~label {
+    color: #fd4;
+}
+
+.star-widget input#rate-5:checked~label {
+    color: #fe7;
+    text-shadow: 0 0 20px #952;
+}
+
+#rate-1:checked~span:before {
+    content: "I just hate it ";
+}
+
+#rate-2:checked~span:before {
+    content: "I don't like it ";
+}
+
+#rate-3:checked~span:before {
+    content: "It is awesome ";
+}
+
+#rate-4:checked~span:before {
+    content: "I just like it ";
+}
+
+#rate-5:checked~span:before {
+    content: "I just love it ";
+}
+
+input:checked~textarea {
+    margin-top: 70px;
+}
+
+.star-widget span {
+    position: absolute;
+    display: block;
+    width: 100%;
+    font-size: 25px;
+    color: #fe7;
+    margin: 5px 0 20px 0;
+    font-weight: 500;
+    text-align: center;
+    transition: all 0.4s ease;
+}
+
+.star-widget textarea {
+    height: 100%;
+    width: 100%;
+    outline: none;
+    color: #222;
+    border: 1px solid #eee;
+    background: #fefefe;
+    padding: 10px;
+    margin-top: 20px;
+    margin-left: 5px;
+    font-size: 17px;
+    resize: none;
+    transition: all 0.5s ease;
+}
+
+.star-widget textarea:focus {
+    border-color: #222;
+}
+
+.star-widget button {
+    margin: 15px 0;
+    margin-left: 5px;
+    height: 100%;
+    width: 100%;
+    border: 1px solid #eee;
+    outline: none;
+    background: #fefefe;
+    color: #222;
+    font-size: 17px;
+    font-weight: 500;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}

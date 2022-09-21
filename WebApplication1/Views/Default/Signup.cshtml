@@ -1,0 +1,42 @@
+﻿@using WebApplication1.Models;
+<div class="page_login">
+    <div class="form">
+        <span class="title">Registration</span>
+
+        <form action="" method="post">
+            <div class="input-field">
+                <span>@ViewData["name"]</span>
+                <input type="text" name="username" placeholder="Enter your name" required>
+                <i class="uil uil-user"></i>
+            </div>
+            <div class="input-field">
+                <span>@ViewData["mail"]</span>
+                <input type="text" name="mail" placeholder="Enter your email" required>
+                <i class="uil uil-envelope icon"></i>
+            </div>
+            <div class="input-field">
+              <span>@ViewData["password"]</span>
+                <input type="password" class="password" name="password" placeholder="Create a password" required>
+                <i class="uil uil-lock icon"></i>
+            </div>
+            <div class="input-field">
+              <span>@ViewData["error"]</span>
+                <input type="password" class="password" name="Confirmpassword" placeholder="Confirm a password" required>
+                <i class="uil uil-lock icon"></i>
+            </div>
+
+
+            <div class="input-field button">
+                <input type="submit" value="Signup Now">
+            </div>
+        </form>
+
+        <div class="login-signup">
+            <span class="text">
+                <a href="#" class="text login-link">
+                    @Html.ActionLink("login now", "login", new { })
+                </a>
+            </span>
+        </div>
+    </div>
+</div>

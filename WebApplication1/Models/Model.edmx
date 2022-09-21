@@ -1,0 +1,1380 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DB_StoreModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TBCart">
+          <Key>
+            <PropertyRef Name="IdCart" />
+          </Key>
+          <Property Name="IdCart" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="IdProduct" Type="uniqueidentifier" />
+          <Property Name="IdUser" Type="uniqueidentifier" />
+          <Property Name="quantity" Type="int" />
+        </EntityType>
+        <EntityType Name="TBColor">
+          <Key>
+            <PropertyRef Name="IdColor" />
+          </Key>
+          <Property Name="IdColor" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="code" Type="nvarchar" MaxLength="30" />
+          <Property Name="IdProduct" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="TBDetails">
+          <Key>
+            <PropertyRef Name="IdDetails" />
+          </Key>
+          <Property Name="IdDetails" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="IdInvoice" Type="uniqueidentifier" />
+          <Property Name="IdProduct" Type="uniqueidentifier" />
+          <Property Name="quantity" Type="int" />
+          <Property Name="totalPrice" Type="int" />
+        </EntityType>
+        <EntityType Name="TBImage">
+          <Key>
+            <PropertyRef Name="IdImage" />
+          </Key>
+          <Property Name="IdImage" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="pathImage" Type="nvarchar(max)" />
+          <Property Name="IdProduct" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="TBInvoice">
+          <Key>
+            <PropertyRef Name="IdInvoice" />
+          </Key>
+          <Property Name="IdInvoice" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="customer" Type="nvarchar(max)" />
+          <Property Name="idEmploye" Type="uniqueidentifier" />
+          <Property Name="date" Type="datetime" />
+          <Property Name="totalPrice" Type="money" />
+        </EntityType>
+        <EntityType Name="TBMsg">
+          <Key>
+            <PropertyRef Name="IdMsg" />
+          </Key>
+          <Property Name="IdMsg" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Msg" Type="text" />
+          <Property Name="name" Type="nvarchar(max)" />
+          <Property Name="phone" Type="nvarchar(max)" />
+          <Property Name="mail" Type="nvarchar(max)" />
+          <Property Name="subject" Type="nvarchar(max)" />
+          <Property Name="IdUser" Type="uniqueidentifier" />
+          <Property Name="date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="TBProduct">
+          <Key>
+            <PropertyRef Name="IdProduct" />
+          </Key>
+          <Property Name="IdProduct" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="quantity" Type="int" />
+          <Property Name="purchasingPrice" Type="float" />
+          <Property Name="name" Type="nvarchar(max)" />
+          <Property Name="sellingPrice" Type="float" />
+          <Property Name="details" Type="nvarchar(max)" />
+          <Property Name="description" Type="nvarchar(max)" />
+          <Property Name="company" Type="nvarchar(max)" />
+          <Property Name="rate" Type="int" />
+          <Property Name="IdType" Type="uniqueidentifier" />
+          <Property Name="show" Type="bit" />
+        </EntityType>
+        <EntityType Name="TBProductType">
+          <Key>
+            <PropertyRef Name="IdType" />
+          </Key>
+          <Property Name="IdType" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="type" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="TBRate">
+          <Key>
+            <PropertyRef Name="IdRate" />
+          </Key>
+          <Property Name="IdRate" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="rate" Type="float" />
+          <Property Name="IdUser" Type="uniqueidentifier" />
+          <Property Name="IdProduct" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="TBUser">
+          <Key>
+            <PropertyRef Name="IdUser" />
+          </Key>
+          <Property Name="IdUser" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="username" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="mail" Type="nvarchar(max)" />
+          <Property Name="role" Type="nvarchar(max)" />
+          <Property Name="password" Type="nvarchar(max)" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DB_Store.dbo.checkQuantity' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="checkQuantity">
+          <Key>
+            <PropertyRef Name="IdCart" />
+          </Key>
+          <Property Name="IdCart" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="IdProduct" Type="uniqueidentifier" />
+          <Property Name="IdUser" Type="uniqueidentifier" />
+          <Property Name="quantity" Type="int" />
+        </EntityType>
+        <Association Name="FK__TBCart__IdUser__1B9317B3">
+          <End Role="TBUser" Type="Self.TBUser" Multiplicity="0..1" />
+          <End Role="TBCart" Type="Self.TBCart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBUser">
+              <PropertyRef Name="IdUser" />
+            </Principal>
+            <Dependent Role="TBCart">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TBColor__IdProdu__15502E78">
+          <End Role="TBProduct" Type="Self.TBProduct" Multiplicity="0..1" />
+          <End Role="TBColor" Type="Self.TBColor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBProduct">
+              <PropertyRef Name="IdProduct" />
+            </Principal>
+            <Dependent Role="TBColor">
+              <PropertyRef Name="IdProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TBDetails__IdInv__20C1E124">
+          <End Role="TBInvoice" Type="Self.TBInvoice" Multiplicity="0..1" />
+          <End Role="TBDetails" Type="Self.TBDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBInvoice">
+              <PropertyRef Name="IdInvoice" />
+            </Principal>
+            <Dependent Role="TBDetails">
+              <PropertyRef Name="IdInvoice" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TBDetails__IdPro__1FCDBCEB">
+          <End Role="TBProduct" Type="Self.TBProduct" Multiplicity="0..1" />
+          <End Role="TBDetails" Type="Self.TBDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBProduct">
+              <PropertyRef Name="IdProduct" />
+            </Principal>
+            <Dependent Role="TBDetails">
+              <PropertyRef Name="IdProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TBImage__IdProdu__182C9B23">
+          <End Role="TBProduct" Type="Self.TBProduct" Multiplicity="0..1" />
+          <End Role="TBImage" Type="Self.TBImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBProduct">
+              <PropertyRef Name="IdProduct" />
+            </Principal>
+            <Dependent Role="TBImage">
+              <PropertyRef Name="IdProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TBMsg__IdUser__6CD828CA">
+          <End Role="TBUser" Type="Self.TBUser" Multiplicity="0..1" />
+          <End Role="TBMsg" Type="Self.TBMsg" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBUser">
+              <PropertyRef Name="IdUser" />
+            </Principal>
+            <Dependent Role="TBMsg">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TBProduct__IdTyp__1273C1CD">
+          <End Role="TBProductType" Type="Self.TBProductType" Multiplicity="0..1" />
+          <End Role="TBProduct" Type="Self.TBProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBProductType">
+              <PropertyRef Name="IdType" />
+            </Principal>
+            <Dependent Role="TBProduct">
+              <PropertyRef Name="IdType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBCart_TBProduct">
+          <End Role="TBProduct" Type="Self.TBProduct" Multiplicity="0..1" />
+          <End Role="TBCart" Type="Self.TBCart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBProduct">
+              <PropertyRef Name="IdProduct" />
+            </Principal>
+            <Dependent Role="TBCart">
+              <PropertyRef Name="IdProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBInvoice_TBUser1">
+          <End Role="TBUser" Type="Self.TBUser" Multiplicity="0..1" />
+          <End Role="TBInvoice" Type="Self.TBInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBUser">
+              <PropertyRef Name="IdUser" />
+            </Principal>
+            <Dependent Role="TBInvoice">
+              <PropertyRef Name="idEmploye" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBRate_TBProduct">
+          <End Role="TBProduct" Type="Self.TBProduct" Multiplicity="0..1" />
+          <End Role="TBRate" Type="Self.TBRate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBProduct">
+              <PropertyRef Name="IdProduct" />
+            </Principal>
+            <Dependent Role="TBRate">
+              <PropertyRef Name="IdProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBRate_TBUser">
+          <End Role="TBUser" Type="Self.TBUser" Multiplicity="0..1" />
+          <End Role="TBRate" Type="Self.TBRate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBUser">
+              <PropertyRef Name="IdUser" />
+            </Principal>
+            <Dependent Role="TBRate">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="addDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idinvoice" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="idproduct" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="quantity" Type="int" Mode="In" />
+        </Function>
+        <Function Name="addInvoice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idinvoice" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="customer" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="idEmploye" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="date" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="addmsg" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdMsg" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="Msg" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="name" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="phone" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="mail" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="subject" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="IdUser" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="date" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="addProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idProduct" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="Quantity" Type="int" Mode="In" />
+          <Parameter Name="Purchasing_Price" Type="float" Mode="In" />
+          <Parameter Name="Selling_Price" Type="float" Mode="In" />
+          <Parameter Name="Details" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="Description" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="name" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="Company" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="Rate" Type="float" Mode="In" />
+          <Parameter Name="IdType" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="addProductColor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdColor" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="Color" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="idProduct" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="addProductImage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdImage" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="PathImage" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="idProduct" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="addProductToCart" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdCart" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="IdUser" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="IdProduct" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="addProductType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="type" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="addUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdUser" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="mail" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="username" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="password" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="role" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="checkQuantitiesForUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdUser" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="deletedColorById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdColor" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="deleteDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="iddetail" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="deletedImageById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdImage" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="deletedProductById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ProductID" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="deletedProductTypetById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdType" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="deleteInvoice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idInvoice" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="deleteInvoiceDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idInvoice" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="deleteProductCart" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdUser" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="IdIdProduct" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="FinalPriceCart" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdUser" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="FinalPriceInvoice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Idinvoice" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="getAllEmploye" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="getColorByIdProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="getImageByIdProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="getMainImage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="getmoreProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdUser" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="GetProductInvoice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idInvoice" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="getProductsCart" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdUser" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="getSomeProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="ModifyRate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdProduct" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="UpdateCart" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdUser" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="IdProduct" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="qty" Type="int" Mode="In" />
+        </Function>
+        <Function Name="updateImageById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdImage" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="pathImage" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="updateProductById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idProduct" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="Quantity" Type="int" Mode="In" />
+          <Parameter Name="Purchasing_Price" Type="float" Mode="In" />
+          <Parameter Name="Selling_Price" Type="float" Mode="In" />
+          <Parameter Name="Details" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="Description" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="Company" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="Rate" Type="float" Mode="In" />
+          <Parameter Name="IdType" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="updateProductTypeById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdType" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="type" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="icon1" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="icon2" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="User_rating" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdProduct" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="IdUser" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <EntityContainer Name="DB_StoreModelStoreContainer">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBCart" EntityType="Self.TBCart" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBColor" EntityType="Self.TBColor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBDetails" EntityType="Self.TBDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBImage" EntityType="Self.TBImage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBInvoice" EntityType="Self.TBInvoice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBMsg" EntityType="Self.TBMsg" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBProduct" EntityType="Self.TBProduct" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBProductType" EntityType="Self.TBProductType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBRate" EntityType="Self.TBRate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBUser" EntityType="Self.TBUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="checkQuantity" EntityType="Self.checkQuantity" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [checkQuantity].[IdCart] AS [IdCart], 
+    [checkQuantity].[IdProduct] AS [IdProduct], 
+    [checkQuantity].[IdUser] AS [IdUser], 
+    [checkQuantity].[quantity] AS [quantity]
+    FROM [dbo].[checkQuantity] AS [checkQuantity]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__TBCart__IdUser__1B9317B3" Association="Self.FK__TBCart__IdUser__1B9317B3">
+            <End Role="TBUser" EntitySet="TBUser" />
+            <End Role="TBCart" EntitySet="TBCart" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TBColor__IdProdu__15502E78" Association="Self.FK__TBColor__IdProdu__15502E78">
+            <End Role="TBProduct" EntitySet="TBProduct" />
+            <End Role="TBColor" EntitySet="TBColor" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TBDetails__IdInv__20C1E124" Association="Self.FK__TBDetails__IdInv__20C1E124">
+            <End Role="TBInvoice" EntitySet="TBInvoice" />
+            <End Role="TBDetails" EntitySet="TBDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TBDetails__IdPro__1FCDBCEB" Association="Self.FK__TBDetails__IdPro__1FCDBCEB">
+            <End Role="TBProduct" EntitySet="TBProduct" />
+            <End Role="TBDetails" EntitySet="TBDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TBImage__IdProdu__182C9B23" Association="Self.FK__TBImage__IdProdu__182C9B23">
+            <End Role="TBProduct" EntitySet="TBProduct" />
+            <End Role="TBImage" EntitySet="TBImage" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TBMsg__IdUser__6CD828CA" Association="Self.FK__TBMsg__IdUser__6CD828CA">
+            <End Role="TBUser" EntitySet="TBUser" />
+            <End Role="TBMsg" EntitySet="TBMsg" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TBProduct__IdTyp__1273C1CD" Association="Self.FK__TBProduct__IdTyp__1273C1CD">
+            <End Role="TBProductType" EntitySet="TBProductType" />
+            <End Role="TBProduct" EntitySet="TBProduct" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBCart_TBProduct" Association="Self.FK_TBCart_TBProduct">
+            <End Role="TBProduct" EntitySet="TBProduct" />
+            <End Role="TBCart" EntitySet="TBCart" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBInvoice_TBUser1" Association="Self.FK_TBInvoice_TBUser1">
+            <End Role="TBUser" EntitySet="TBUser" />
+            <End Role="TBInvoice" EntitySet="TBInvoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBRate_TBProduct" Association="Self.FK_TBRate_TBProduct">
+            <End Role="TBProduct" EntitySet="TBProduct" />
+            <End Role="TBRate" EntitySet="TBRate" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBRate_TBUser" Association="Self.FK_TBRate_TBUser">
+            <End Role="TBUser" EntitySet="TBUser" />
+            <End Role="TBRate" EntitySet="TBRate" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DB_StoreModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TBCart">
+          <Key>
+            <PropertyRef Name="IdCart" />
+          </Key>
+          <Property Name="IdCart" Type="Guid" Nullable="false" />
+          <Property Name="IdProduct" Type="Guid" />
+          <Property Name="IdUser" Type="Guid" />
+          <Property Name="quantity" Type="Int32" />
+          <NavigationProperty Name="TBProduct" Relationship="Self.FK__TBCart__IdProduc__1C873BEC" FromRole="TBCart" ToRole="TBProduct" />
+          <NavigationProperty Name="TBUser" Relationship="Self.FK__TBCart__IdUser__1B9317B3" FromRole="TBCart" ToRole="TBUser" />
+        </EntityType>
+        <EntityType Name="TBColor">
+          <Key>
+            <PropertyRef Name="IdColor" />
+          </Key>
+          <Property Name="IdColor" Type="Guid" Nullable="false" />
+          <Property Name="code" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="IdProduct" Type="Guid" />
+          <NavigationProperty Name="TBProduct" Relationship="Self.FK__TBColor__IdProdu__15502E78" FromRole="TBColor" ToRole="TBProduct" />
+        </EntityType>
+        <EntityType Name="TBDetail">
+          <Key>
+            <PropertyRef Name="IdDetails" />
+          </Key>
+          <Property Name="IdDetails" Type="Guid" Nullable="false" />
+          <Property Name="IdInvoice" Type="Guid" />
+          <Property Name="IdProduct" Type="Guid" />
+          <Property Name="quantity" Type="Int32" />
+          <Property Name="totalPrice" Type="Int32" />
+          <NavigationProperty Name="TBInvoice" Relationship="Self.FK__TBDetails__IdInv__20C1E124" FromRole="TBDetails" ToRole="TBInvoice" />
+          <NavigationProperty Name="TBProduct" Relationship="Self.FK__TBDetails__IdPro__1FCDBCEB" FromRole="TBDetails" ToRole="TBProduct" />
+        </EntityType>
+        <EntityType Name="TBImage">
+          <Key>
+            <PropertyRef Name="IdImage" />
+          </Key>
+          <Property Name="IdImage" Type="Guid" Nullable="false" />
+          <Property Name="pathImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IdProduct" Type="Guid" />
+          <NavigationProperty Name="TBProduct" Relationship="Self.FK__TBImage__IdProdu__182C9B23" FromRole="TBImage" ToRole="TBProduct" />
+        </EntityType>
+        <EntityType Name="TBInvoice">
+          <Key>
+            <PropertyRef Name="IdInvoice" />
+          </Key>
+          <Property Name="IdInvoice" Type="Guid" Nullable="false" />
+          <Property Name="idEmploye" Type="Guid" />
+          <Property Name="date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="TBDetails" Relationship="Self.FK__TBDetails__IdInv__20C1E124" FromRole="TBInvoice" ToRole="TBDetails" />
+          <NavigationProperty Name="TBUser" Relationship="Self.FK_TBInvoice_TBUser1" FromRole="TBInvoice" ToRole="TBUser" />
+          <Property Name="customer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="totalPrice" Type="Decimal" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="TBMsg">
+          <Key>
+            <PropertyRef Name="IdMsg" />
+          </Key>
+          <Property Name="IdMsg" Type="Guid" Nullable="false" />
+          <Property Name="Msg" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="mail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="subject" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IdUser" Type="Guid" />
+          <Property Name="date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="TBUser" Relationship="Self.FK__TBMsg__IdUser__6CD828CA" FromRole="TBMsg" ToRole="TBUser" />
+        </EntityType>
+        <EntityType Name="TBProduct">
+          <Key>
+            <PropertyRef Name="IdProduct" />
+          </Key>
+          <Property Name="IdProduct" Type="Guid" Nullable="false" />
+          <Property Name="quantity" Type="Int32" />
+          <Property Name="purchasingPrice" Type="Double" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="sellingPrice" Type="Double" />
+          <Property Name="details" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="company" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="rate" Type="Int32" />
+          <Property Name="IdType" Type="Guid" />
+          <NavigationProperty Name="TBCarts" Relationship="Self.FK__TBCart__IdProduc__1C873BEC" FromRole="TBProduct" ToRole="TBCart" />
+          <NavigationProperty Name="TBColors" Relationship="Self.FK__TBColor__IdProdu__15502E78" FromRole="TBProduct" ToRole="TBColor" />
+          <NavigationProperty Name="TBDetails" Relationship="Self.FK__TBDetails__IdPro__1FCDBCEB" FromRole="TBProduct" ToRole="TBDetails" />
+          <NavigationProperty Name="TBImages" Relationship="Self.FK__TBImage__IdProdu__182C9B23" FromRole="TBProduct" ToRole="TBImage" />
+          <NavigationProperty Name="TBProductType" Relationship="Self.FK__TBProduct__IdTyp__1273C1CD" FromRole="TBProduct" ToRole="TBProductType" />
+          <NavigationProperty Name="TBRates" Relationship="Self.FK_TBRate_TBProduct" FromRole="TBProduct" ToRole="TBRate" />
+          <Property Name="show" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="TBProductType">
+          <Key>
+            <PropertyRef Name="IdType" />
+          </Key>
+          <Property Name="IdType" Type="Guid" Nullable="false" />
+          <Property Name="type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TBProducts" Relationship="Self.FK__TBProduct__IdTyp__1273C1CD" FromRole="TBProductType" ToRole="TBProduct" />
+        </EntityType>
+        <EntityType Name="TBRate">
+          <Key>
+            <PropertyRef Name="IdRate" />
+          </Key>
+          <Property Name="IdRate" Type="Guid" Nullable="false" />
+          <Property Name="rate" Type="Double" />
+          <Property Name="IdUser" Type="Guid" />
+          <Property Name="IdProduct" Type="Guid" />
+          <NavigationProperty Name="TBProduct" Relationship="Self.FK_TBRate_TBProduct" FromRole="TBRate" ToRole="TBProduct" />
+          <NavigationProperty Name="TBUser" Relationship="Self.FK_TBRate_TBUser" FromRole="TBRate" ToRole="TBUser" />
+        </EntityType>
+        <EntityType Name="TBUser">
+          <Key>
+            <PropertyRef Name="IdUser" />
+          </Key>
+          <Property Name="IdUser" Type="Guid" Nullable="false" />
+          <Property Name="username" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="mail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="role" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TBCarts" Relationship="Self.FK__TBCart__IdUser__1B9317B3" FromRole="TBUser" ToRole="TBCart" />
+          <NavigationProperty Name="TBInvoices" Relationship="Self.FK_TBInvoice_TBUser1" FromRole="TBUser" ToRole="TBInvoice" />
+          <NavigationProperty Name="TBMsgs" Relationship="Self.FK__TBMsg__IdUser__6CD828CA" FromRole="TBUser" ToRole="TBMsg" />
+          <NavigationProperty Name="TBRates" Relationship="Self.FK_TBRate_TBUser" FromRole="TBUser" ToRole="TBRate" />
+        </EntityType>
+        <Association Name="FK__TBCart__IdProduc__1C873BEC">
+          <End Role="TBProduct" Type="Self.TBProduct" Multiplicity="0..1" />
+          <End Role="TBCart" Type="Self.TBCart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBProduct">
+              <PropertyRef Name="IdProduct" />
+            </Principal>
+            <Dependent Role="TBCart">
+              <PropertyRef Name="IdProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TBCart__IdUser__1B9317B3">
+          <End Role="TBUser" Type="Self.TBUser" Multiplicity="0..1" />
+          <End Role="TBCart" Type="Self.TBCart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBUser">
+              <PropertyRef Name="IdUser" />
+            </Principal>
+            <Dependent Role="TBCart">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TBColor__IdProdu__15502E78">
+          <End Role="TBProduct" Type="Self.TBProduct" Multiplicity="0..1" />
+          <End Role="TBColor" Type="Self.TBColor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBProduct">
+              <PropertyRef Name="IdProduct" />
+            </Principal>
+            <Dependent Role="TBColor">
+              <PropertyRef Name="IdProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TBDetails__IdInv__20C1E124">
+          <End Role="TBInvoice" Type="Self.TBInvoice" Multiplicity="0..1" />
+          <End Role="TBDetails" Type="Self.TBDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBInvoice">
+              <PropertyRef Name="IdInvoice" />
+            </Principal>
+            <Dependent Role="TBDetails">
+              <PropertyRef Name="IdInvoice" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TBDetails__IdPro__1FCDBCEB">
+          <End Role="TBProduct" Type="Self.TBProduct" Multiplicity="0..1" />
+          <End Role="TBDetails" Type="Self.TBDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBProduct">
+              <PropertyRef Name="IdProduct" />
+            </Principal>
+            <Dependent Role="TBDetails">
+              <PropertyRef Name="IdProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TBImage__IdProdu__182C9B23">
+          <End Role="TBProduct" Type="Self.TBProduct" Multiplicity="0..1" />
+          <End Role="TBImage" Type="Self.TBImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBProduct">
+              <PropertyRef Name="IdProduct" />
+            </Principal>
+            <Dependent Role="TBImage">
+              <PropertyRef Name="IdProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBInvoice_TBUser1">
+          <End Role="TBUser" Type="Self.TBUser" Multiplicity="0..1" />
+          <End Role="TBInvoice" Type="Self.TBInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBUser">
+              <PropertyRef Name="IdUser" />
+            </Principal>
+            <Dependent Role="TBInvoice">
+              <PropertyRef Name="idEmploye" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TBMsg__IdUser__6CD828CA">
+          <End Role="TBUser" Type="Self.TBUser" Multiplicity="0..1" />
+          <End Role="TBMsg" Type="Self.TBMsg" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBUser">
+              <PropertyRef Name="IdUser" />
+            </Principal>
+            <Dependent Role="TBMsg">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TBProduct__IdTyp__1273C1CD">
+          <End Role="TBProductType" Type="Self.TBProductType" Multiplicity="0..1" />
+          <End Role="TBProduct" Type="Self.TBProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBProductType">
+              <PropertyRef Name="IdType" />
+            </Principal>
+            <Dependent Role="TBProduct">
+              <PropertyRef Name="IdType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBRate_TBProduct">
+          <End Role="TBProduct" Type="Self.TBProduct" Multiplicity="0..1" />
+          <End Role="TBRate" Type="Self.TBRate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBProduct">
+              <PropertyRef Name="IdProduct" />
+            </Principal>
+            <Dependent Role="TBRate">
+              <PropertyRef Name="IdProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBRate_TBUser">
+          <End Role="TBUser" Type="Self.TBUser" Multiplicity="0..1" />
+          <End Role="TBRate" Type="Self.TBRate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBUser">
+              <PropertyRef Name="IdUser" />
+            </Principal>
+            <Dependent Role="TBRate">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB_StoreEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="TBCarts" EntityType="Self.TBCart" />
+          <EntitySet Name="TBColors" EntityType="Self.TBColor" />
+          <EntitySet Name="TBDetails" EntityType="Self.TBDetail" />
+          <EntitySet Name="TBImages" EntityType="Self.TBImage" />
+          <EntitySet Name="TBInvoices" EntityType="Self.TBInvoice" />
+          <EntitySet Name="TBMsgs" EntityType="Self.TBMsg" />
+          <EntitySet Name="TBProducts" EntityType="Self.TBProduct" />
+          <EntitySet Name="TBProductTypes" EntityType="Self.TBProductType" />
+          <EntitySet Name="TBRates" EntityType="Self.TBRate" />
+          <EntitySet Name="TBUsers" EntityType="Self.TBUser" />
+          <AssociationSet Name="FK__TBCart__IdProduc__1C873BEC" Association="Self.FK__TBCart__IdProduc__1C873BEC">
+            <End Role="TBProduct" EntitySet="TBProducts" />
+            <End Role="TBCart" EntitySet="TBCarts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TBCart__IdUser__1B9317B3" Association="Self.FK__TBCart__IdUser__1B9317B3">
+            <End Role="TBUser" EntitySet="TBUsers" />
+            <End Role="TBCart" EntitySet="TBCarts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TBColor__IdProdu__15502E78" Association="Self.FK__TBColor__IdProdu__15502E78">
+            <End Role="TBProduct" EntitySet="TBProducts" />
+            <End Role="TBColor" EntitySet="TBColors" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TBDetails__IdInv__20C1E124" Association="Self.FK__TBDetails__IdInv__20C1E124">
+            <End Role="TBInvoice" EntitySet="TBInvoices" />
+            <End Role="TBDetails" EntitySet="TBDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TBDetails__IdPro__1FCDBCEB" Association="Self.FK__TBDetails__IdPro__1FCDBCEB">
+            <End Role="TBProduct" EntitySet="TBProducts" />
+            <End Role="TBDetails" EntitySet="TBDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TBImage__IdProdu__182C9B23" Association="Self.FK__TBImage__IdProdu__182C9B23">
+            <End Role="TBProduct" EntitySet="TBProducts" />
+            <End Role="TBImage" EntitySet="TBImages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBInvoice_TBUser1" Association="Self.FK_TBInvoice_TBUser1">
+            <End Role="TBUser" EntitySet="TBUsers" />
+            <End Role="TBInvoice" EntitySet="TBInvoices" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TBMsg__IdUser__6CD828CA" Association="Self.FK__TBMsg__IdUser__6CD828CA">
+            <End Role="TBUser" EntitySet="TBUsers" />
+            <End Role="TBMsg" EntitySet="TBMsgs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TBProduct__IdTyp__1273C1CD" Association="Self.FK__TBProduct__IdTyp__1273C1CD">
+            <End Role="TBProductType" EntitySet="TBProductTypes" />
+            <End Role="TBProduct" EntitySet="TBProducts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBRate_TBProduct" Association="Self.FK_TBRate_TBProduct">
+            <End Role="TBProduct" EntitySet="TBProducts" />
+            <End Role="TBRate" EntitySet="TBRates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBRate_TBUser" Association="Self.FK_TBRate_TBUser">
+            <End Role="TBUser" EntitySet="TBUsers" />
+            <End Role="TBRate" EntitySet="TBRates" />
+          </AssociationSet>
+          <FunctionImport Name="addCart">
+            <Parameter Name="IdCart" Mode="In" Type="Guid" />
+            <Parameter Name="IdUser" Mode="In" Type="Guid" />
+            <Parameter Name="IdProduct" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="addDetails">
+            <Parameter Name="idinvoice" Mode="In" Type="Guid" />
+            <Parameter Name="idproduct" Mode="In" Type="Guid" />
+            <Parameter Name="quantity" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="addInvoice">
+            <Parameter Name="idinvoice" Mode="In" Type="Guid" />
+            <Parameter Name="customer" Mode="In" Type="String" />
+            <Parameter Name="idEmploye" Mode="In" Type="Guid" />
+            <Parameter Name="date" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="addmsg">
+            <Parameter Name="IdMsg" Mode="In" Type="Guid" />
+            <Parameter Name="Msg" Mode="In" Type="String" />
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="phone" Mode="In" Type="String" />
+            <Parameter Name="mail" Mode="In" Type="String" />
+            <Parameter Name="subject" Mode="In" Type="String" />
+            <Parameter Name="IdUser" Mode="In" Type="Guid" />
+            <Parameter Name="date" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="addProduct">
+            <Parameter Name="idProduct" Mode="In" Type="Guid" />
+            <Parameter Name="Quantity" Mode="In" Type="Int32" />
+            <Parameter Name="Purchasing_Price" Mode="In" Type="Double" />
+            <Parameter Name="Selling_Price" Mode="In" Type="Double" />
+            <Parameter Name="Details" Mode="In" Type="String" />
+            <Parameter Name="Description" Mode="In" Type="String" />
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="Company" Mode="In" Type="String" />
+            <Parameter Name="Rate" Mode="In" Type="Double" />
+            <Parameter Name="IdType" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="addProductColor">
+            <Parameter Name="IdColor" Mode="In" Type="Guid" />
+            <Parameter Name="Color" Mode="In" Type="String" />
+            <Parameter Name="idProduct" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="addProductImage">
+            <Parameter Name="IdImage" Mode="In" Type="Guid" />
+            <Parameter Name="PathImage" Mode="In" Type="String" />
+            <Parameter Name="idProduct" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="addProductType">
+          <Parameter Name="type" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="addUser">
+            <Parameter Name="IdUser" Mode="In" Type="Guid" />
+            <Parameter Name="mail" Mode="In" Type="String" />
+            <Parameter Name="username" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="String" />
+            <Parameter Name="role" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="check_mail" ReturnType="Collection(Int32)">
+          <Parameter Name="mail" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="deletedColorById">
+          <Parameter Name="IdColor" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="deleteDetails">
+          <Parameter Name="iddetail" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="deletedImageById">
+          <Parameter Name="IdImage" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="deletedProductById">
+          <Parameter Name="ProductID" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="deletedProductTypetById">
+          <Parameter Name="IdType" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="deleteInvoice">
+          <Parameter Name="idInvoice" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="deleteInvoiceDetails">
+          <Parameter Name="idInvoice" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="deleteProductCart">
+            <Parameter Name="IdUser" Mode="In" Type="Guid" />
+            <Parameter Name="IdIdProduct" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="FinalPriceCart" ReturnType="Collection(Double)">
+          <Parameter Name="IdUser" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="getAllEmploye" ReturnType="Collection(DB_StoreModel.getAllEmploye_Result)" />
+          <FunctionImport Name="GetAllProduct" ReturnType="Collection(DB_StoreModel.GetAllProduct_Result)" />
+          <FunctionImport Name="getAllProductType" ReturnType="Collection(DB_StoreModel.getAllProductType_Result)" />
+          <FunctionImport Name="getColorByIdProduct" ReturnType="Collection(DB_StoreModel.getColorByIdProduct_Result)">
+          <Parameter Name="id" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="getIdUser" ReturnType="Collection(Guid)">
+            <Parameter Name="mail" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="getImageByIdProduct" ReturnType="Collection(DB_StoreModel.getImageByIdProduct_Result)">
+          <Parameter Name="id" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="getMainImage" ReturnType="Collection(DB_StoreModel.getMainImage_Result)" />
+          <FunctionImport Name="getmoreProduct" ReturnType="Collection(DB_StoreModel.getmoreProduct_Result)">
+          <Parameter Name="IdUser" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="GetProductInvoice" ReturnType="Collection(Guid)">
+          <Parameter Name="idInvoice" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="getProductsCart" ReturnType="Collection(DB_StoreModel.getProductsCart_Result)">
+          <Parameter Name="IdUser" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="getSomeProduct" ReturnType="Collection(DB_StoreModel.getSomeProduct_Result)" />
+          <FunctionImport Name="ModifyRate">
+          <Parameter Name="IdProduct" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(DB_StoreModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(DB_StoreModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+          <FunctionImport Name="UpdateCart">
+            <Parameter Name="IdUser" Mode="In" Type="Guid" />
+            <Parameter Name="IdProduct" Mode="In" Type="Guid" />
+            <Parameter Name="qty" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="updateImageById">
+            <Parameter Name="IdImage" Mode="In" Type="Guid" />
+            <Parameter Name="pathImage" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="updateProductById">
+            <Parameter Name="idProduct" Mode="In" Type="Guid" />
+            <Parameter Name="Quantity" Mode="In" Type="Int32" />
+            <Parameter Name="Purchasing_Price" Mode="In" Type="Double" />
+            <Parameter Name="Selling_Price" Mode="In" Type="Double" />
+            <Parameter Name="Details" Mode="In" Type="String" />
+            <Parameter Name="Description" Mode="In" Type="String" />
+            <Parameter Name="Company" Mode="In" Type="String" />
+            <Parameter Name="Rate" Mode="In" Type="Double" />
+            <Parameter Name="IdType" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="updateProductTypeById">
+            <Parameter Name="IdType" Mode="In" Type="Guid" />
+            <Parameter Name="type" Mode="In" Type="String" />
+            <Parameter Name="icon1" Mode="In" Type="String" />
+            <Parameter Name="icon2" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="User_rating" ReturnType="Collection(Int32)">
+            <Parameter Name="IdProduct" Mode="In" Type="Guid" />
+            <Parameter Name="IdUser" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="verify_User_data" ReturnType="Collection(Int32)">
+            <Parameter Name="mail" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="verify_User_rating" ReturnType="Collection(Int32)">
+            <Parameter Name="IdUser" Mode="In" Type="Guid" />
+            <Parameter Name="IdProduct" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="addProductToCart">
+            <Parameter Name="IdCart" Mode="In" Type="Guid" />
+            <Parameter Name="IdUser" Mode="In" Type="Guid" />
+            <Parameter Name="IdProduct" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="checkQuantitiesForUser">
+          <Parameter Name="IdUser" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <EntitySet Name="checkQuantities" EntityType="DB_StoreModel.checkQuantity" />
+          <FunctionImport Name="FinalPriceInvoice">
+          <Parameter Name="Idinvoice" Mode="In" Type="Guid" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="getAllEmploye_Result">
+          <Property Type="Guid" Name="IdUser" Nullable="false" />
+          <Property Type="String" Name="username" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetAllProduct_Result">
+          <Property Type="Guid" Name="idProduct" Nullable="false" />
+          <Property Type="String" Name="Company" Nullable="true" />
+          <Property Type="String" Name="name" Nullable="true" />
+          <Property Type="String" Name="Details" Nullable="true" />
+          <Property Type="String" Name="Description" Nullable="true" />
+          <Property Type="Double" Name="purchasingPrice" Nullable="true" />
+          <Property Type="Double" Name="sellingPrice" Nullable="true" />
+          <Property Type="Int32" Name="Quantity" Nullable="true" />
+          <Property Type="Int32" Name="Rate" Nullable="true" />
+          <Property Type="String" Name="type" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getAllProductType_Result">
+          <Property Type="Guid" Name="IdType" Nullable="false" />
+          <Property Type="String" Name="type" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getColorByIdProduct_Result">
+          <Property Type="Guid" Name="Idcolor" Nullable="false" />
+          <Property Type="String" Name="code" Nullable="true" MaxLength="30" />
+        </ComplexType>
+        <ComplexType Name="getImageByIdProduct_Result">
+          <Property Type="Guid" Name="IdImage" Nullable="false" />
+          <Property Type="String" Name="pathImage" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getMainImage_Result">
+          <Property Type="String" Name="pathImage" Nullable="true" />
+          <Property Type="Guid" Name="IdProduct" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getmoreProduct_Result">
+          <Property Type="Guid" Name="IdProduct" Nullable="false" />
+          <Property Type="String" Name="details" Nullable="true" />
+          <Property Type="Int32" Name="rate" Nullable="true" />
+          <Property Type="String" Name="company" Nullable="true" />
+          <Property Type="String" Name="pathImage" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getProductsCart_Result">
+          <Property Type="Guid" Name="IdProduct" Nullable="false" />
+          <Property Type="String" Name="description" Nullable="true" />
+          <Property Type="Double" Name="sellingPrice" Nullable="true" />
+          <Property Type="Int32" Name="quantity" Nullable="true" />
+          <Property Type="String" Name="pathImage" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getSomeProduct_Result">
+          <Property Type="Guid" Name="idProduct" Nullable="false" />
+          <Property Type="String" Name="Company" Nullable="true" />
+          <Property Type="String" Name="name" Nullable="true" />
+          <Property Type="String" Name="Details" Nullable="true" />
+          <Property Type="String" Name="Description" Nullable="true" />
+          <Property Type="Double" Name="purchasingPrice" Nullable="true" />
+          <Property Type="Double" Name="sellingPrice" Nullable="true" />
+          <Property Type="Int32" Name="Quantity" Nullable="true" />
+          <Property Type="Int32" Name="Rate" Nullable="true" />
+          <Property Type="String" Name="type" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="checkQuantity">
+          <Key>
+            <PropertyRef Name="IdCart" />
+          </Key>
+          <Property Name="IdCart" Type="Guid" Nullable="false" />
+          <Property Name="IdProduct" Type="Guid" />
+          <Property Name="IdUser" Type="Guid" />
+          <Property Name="quantity" Type="Int32" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DB_StoreModelStoreContainer" CdmEntityContainer="DB_StoreEntities">
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="DB_StoreModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBCarts">
+            <EntityTypeMapping TypeName="DB_StoreModel.TBCart">
+              <MappingFragment StoreEntitySet="TBCart">
+                <ScalarProperty Name="IdCart" ColumnName="IdCart" />
+                <ScalarProperty Name="IdProduct" ColumnName="IdProduct" />
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBColors">
+            <EntityTypeMapping TypeName="DB_StoreModel.TBColor">
+              <MappingFragment StoreEntitySet="TBColor">
+                <ScalarProperty Name="IdColor" ColumnName="IdColor" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="IdProduct" ColumnName="IdProduct" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBDetails">
+            <EntityTypeMapping TypeName="DB_StoreModel.TBDetail">
+              <MappingFragment StoreEntitySet="TBDetails">
+                <ScalarProperty Name="IdDetails" ColumnName="IdDetails" />
+                <ScalarProperty Name="IdInvoice" ColumnName="IdInvoice" />
+                <ScalarProperty Name="IdProduct" ColumnName="IdProduct" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="totalPrice" ColumnName="totalPrice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBImages">
+            <EntityTypeMapping TypeName="DB_StoreModel.TBImage">
+              <MappingFragment StoreEntitySet="TBImage">
+                <ScalarProperty Name="IdImage" ColumnName="IdImage" />
+                <ScalarProperty Name="pathImage" ColumnName="pathImage" />
+                <ScalarProperty Name="IdProduct" ColumnName="IdProduct" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBInvoices">
+            <EntityTypeMapping TypeName="DB_StoreModel.TBInvoice">
+              <MappingFragment StoreEntitySet="TBInvoice">
+                <ScalarProperty Name="totalPrice" ColumnName="totalPrice" />
+                <ScalarProperty Name="customer" ColumnName="customer" />
+                <ScalarProperty Name="IdInvoice" ColumnName="IdInvoice" />
+                <ScalarProperty Name="idEmploye" ColumnName="idEmploye" />
+                <ScalarProperty Name="date" ColumnName="date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBMsgs">
+            <EntityTypeMapping TypeName="DB_StoreModel.TBMsg">
+              <MappingFragment StoreEntitySet="TBMsg">
+                <ScalarProperty Name="IdMsg" ColumnName="IdMsg" />
+                <ScalarProperty Name="Msg" ColumnName="Msg" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="mail" ColumnName="mail" />
+                <ScalarProperty Name="subject" ColumnName="subject" />
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="date" ColumnName="date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBProducts">
+            <EntityTypeMapping TypeName="DB_StoreModel.TBProduct">
+              <MappingFragment StoreEntitySet="TBProduct">
+                <ScalarProperty Name="show" ColumnName="show" />
+                <ScalarProperty Name="IdProduct" ColumnName="IdProduct" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="purchasingPrice" ColumnName="purchasingPrice" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="sellingPrice" ColumnName="sellingPrice" />
+                <ScalarProperty Name="details" ColumnName="details" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="company" ColumnName="company" />
+                <ScalarProperty Name="rate" ColumnName="rate" />
+                <ScalarProperty Name="IdType" ColumnName="IdType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBProductTypes">
+            <EntityTypeMapping TypeName="DB_StoreModel.TBProductType">
+              <MappingFragment StoreEntitySet="TBProductType">
+                <ScalarProperty Name="IdType" ColumnName="IdType" />
+                <ScalarProperty Name="type" ColumnName="type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBRates">
+            <EntityTypeMapping TypeName="DB_StoreModel.TBRate">
+              <MappingFragment StoreEntitySet="TBRate">
+                <ScalarProperty Name="IdRate" ColumnName="IdRate" />
+                <ScalarProperty Name="rate" ColumnName="rate" />
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="IdProduct" ColumnName="IdProduct" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBUsers">
+            <EntityTypeMapping TypeName="DB_StoreModel.TBUser">
+              <MappingFragment StoreEntitySet="TBUser">
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="mail" ColumnName="mail" />
+                <ScalarProperty Name="role" ColumnName="role" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="addDetails" FunctionName="DB_StoreModel.Store.addDetails" />
+          <FunctionImportMapping FunctionImportName="addInvoice" FunctionName="DB_StoreModel.Store.addInvoice" />
+          <FunctionImportMapping FunctionImportName="addmsg" FunctionName="DB_StoreModel.Store.addmsg" />
+          <FunctionImportMapping FunctionImportName="addProduct" FunctionName="DB_StoreModel.Store.addProduct" />
+          <FunctionImportMapping FunctionImportName="addProductColor" FunctionName="DB_StoreModel.Store.addProductColor" />
+          <FunctionImportMapping FunctionImportName="addProductImage" FunctionName="DB_StoreModel.Store.addProductImage" />
+          <FunctionImportMapping FunctionImportName="addProductType" FunctionName="DB_StoreModel.Store.addProductType" />
+          <FunctionImportMapping FunctionImportName="addUser" FunctionName="DB_StoreModel.Store.addUser" />
+          <FunctionImportMapping FunctionImportName="deletedColorById" FunctionName="DB_StoreModel.Store.deletedColorById" />
+          <FunctionImportMapping FunctionImportName="deleteDetails" FunctionName="DB_StoreModel.Store.deleteDetails" />
+          <FunctionImportMapping FunctionImportName="deletedImageById" FunctionName="DB_StoreModel.Store.deletedImageById" />
+          <FunctionImportMapping FunctionImportName="deletedProductById" FunctionName="DB_StoreModel.Store.deletedProductById" />
+          <FunctionImportMapping FunctionImportName="deletedProductTypetById" FunctionName="DB_StoreModel.Store.deletedProductTypetById" />
+          <FunctionImportMapping FunctionImportName="deleteInvoice" FunctionName="DB_StoreModel.Store.deleteInvoice" />
+          <FunctionImportMapping FunctionImportName="deleteInvoiceDetails" FunctionName="DB_StoreModel.Store.deleteInvoiceDetails" />
+          <FunctionImportMapping FunctionImportName="deleteProductCart" FunctionName="DB_StoreModel.Store.deleteProductCart" />
+          <FunctionImportMapping FunctionImportName="FinalPriceCart" FunctionName="DB_StoreModel.Store.FinalPriceCart" />
+          <FunctionImportMapping FunctionImportName="getAllEmploye" FunctionName="DB_StoreModel.Store.getAllEmploye">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DB_StoreModel.getAllEmploye_Result">
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="username" ColumnName="username" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getColorByIdProduct" FunctionName="DB_StoreModel.Store.getColorByIdProduct">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DB_StoreModel.getColorByIdProduct_Result">
+                <ScalarProperty Name="Idcolor" ColumnName="Idcolor" />
+                <ScalarProperty Name="code" ColumnName="code" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getImageByIdProduct" FunctionName="DB_StoreModel.Store.getImageByIdProduct">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DB_StoreModel.getImageByIdProduct_Result">
+                <ScalarProperty Name="IdImage" ColumnName="IdImage" />
+                <ScalarProperty Name="pathImage" ColumnName="pathImage" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getMainImage" FunctionName="DB_StoreModel.Store.getMainImage">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DB_StoreModel.getMainImage_Result">
+                <ScalarProperty Name="pathImage" ColumnName="pathImage" />
+                <ScalarProperty Name="IdProduct" ColumnName="IdProduct" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getmoreProduct" FunctionName="DB_StoreModel.Store.getmoreProduct">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DB_StoreModel.getmoreProduct_Result">
+                <ScalarProperty Name="IdProduct" ColumnName="IdProduct" />
+                <ScalarProperty Name="details" ColumnName="details" />
+                <ScalarProperty Name="rate" ColumnName="rate" />
+                <ScalarProperty Name="company" ColumnName="company" />
+                <ScalarProperty Name="pathImage" ColumnName="pathImage" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetProductInvoice" FunctionName="DB_StoreModel.Store.GetProductInvoice" />
+          <FunctionImportMapping FunctionImportName="getProductsCart" FunctionName="DB_StoreModel.Store.getProductsCart">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DB_StoreModel.getProductsCart_Result">
+                <ScalarProperty Name="IdProduct" ColumnName="IdProduct" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="sellingPrice" ColumnName="sellingPrice" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="pathImage" ColumnName="pathImage" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getSomeProduct" FunctionName="DB_StoreModel.Store.getSomeProduct">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DB_StoreModel.getSomeProduct_Result">
+                <ScalarProperty Name="idProduct" ColumnName="idProduct" />
+                <ScalarProperty Name="Company" ColumnName="Company" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="Details" ColumnName="Details" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="purchasingPrice" ColumnName="purchasingPrice" />
+                <ScalarProperty Name="sellingPrice" ColumnName="sellingPrice" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+                <ScalarProperty Name="type" ColumnName="type" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ModifyRate" FunctionName="DB_StoreModel.Store.ModifyRate" />
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="DB_StoreModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="DB_StoreModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="DB_StoreModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="DB_StoreModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DB_StoreModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="DB_StoreModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DB_StoreModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="DB_StoreModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="DB_StoreModel.Store.sp_upgraddiagrams" />
+          <FunctionImportMapping FunctionImportName="UpdateCart" FunctionName="DB_StoreModel.Store.UpdateCart" />
+          <FunctionImportMapping FunctionImportName="updateImageById" FunctionName="DB_StoreModel.Store.updateImageById" />
+          <FunctionImportMapping FunctionImportName="updateProductById" FunctionName="DB_StoreModel.Store.updateProductById" />
+          <FunctionImportMapping FunctionImportName="updateProductTypeById" FunctionName="DB_StoreModel.Store.updateProductTypeById" />
+          <FunctionImportMapping FunctionImportName="User_rating" FunctionName="DB_StoreModel.Store.User_rating" />
+          <FunctionImportMapping FunctionImportName="addProductToCart" FunctionName="DB_StoreModel.Store.addProductToCart" />
+          <FunctionImportMapping FunctionImportName="checkQuantitiesForUser" FunctionName="DB_StoreModel.Store.checkQuantitiesForUser" />
+          <EntitySetMapping Name="checkQuantities">
+            <EntityTypeMapping TypeName="DB_StoreModel.checkQuantity">
+              <MappingFragment StoreEntitySet="checkQuantity">
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="IdProduct" ColumnName="IdProduct" />
+                <ScalarProperty Name="IdCart" ColumnName="IdCart" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="FinalPriceInvoice" FunctionName="DB_StoreModel.Store.FinalPriceInvoice" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

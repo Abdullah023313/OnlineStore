@@ -1,0 +1,112 @@
+﻿<div class="cart">
+    <a href="~/Default/Index" class="arrow">
+        <i class="fas fa-arrow-right"></i>
+    </a>
+    <div class="page_cart">
+        <h2>Shopping Cart</h2>
+        <div class="hr"></div>
+        <div class="Cart_products"> 
+            @{int allQuantity = 0, c = 0;}
+        @foreach (var item in Model.product)
+        {
+            allQuantity = allQuantity + @item.quantity;
+            c = c + 1;
+            <div class="box">
+                <img src=~/images/@item.pathImage alt="">
+                <div class="content">
+                    <div class="details">
+                       @item.description
+                    </div>
+                    <div class="price"><sup>$</sup>@item.sellingPrice</div>
+                    <div class="edit">
+                        Qty:
+                        @using (Html.BeginForm("UpdateCart", "Default", FormMethod.Post))
+                        {
+                            <input type="hidden" value=@item.IdProduct  name="IdProduct"  />
+                            <input aria-label="number" type="number" value=@item.quantity name="gty" id="">
+                            <button class="Update" id="Update" type="submit">Update</button>
+                        }
+                        <span></span>
+                        @Html.ActionLink("Delete", "deleteProductCart", new { IdProduct = item.IdProduct })                   
+                    </div>
+
+                </div>
+            </div>
+        }
+            <div class="total">            
+                <div class="content"><a class="btn_buy" >Buy</a>Subtotal (@allQuantity items): $@Model.FinalPrice</div>
+            </div>
+        </div>
+    </div>
+    <nav >
+        <div class="Buy">
+            <div class="total">
+                <div class="content">
+                    Subtotal (@allQuantity items):
+                    <div class="price"> $@Model.FinalPrice</div>
+                </div>
+            </div>
+            <a class="btn_buy" id="btnBuy">Buy</a>
+        </div>
+        <div class="moreProducts">
+            <h5>Sponsored Products related to items in your cart</h5>
+            @{c = c < 3 ? c : c+2; }
+@foreach (var item in Model.moreproducts)
+{
+    if (c>0)
+    {   c--;
+        <div class="box">
+            <img src="~/images/@item.pathImage" alt="">
+            <div class="content">
+                <div>@item.details</div>
+                <div class="start">
+                    @for (int j = 0; j < item.rate; j++)
+                    {
+                        <i class="fas fa-star"></i>
+                    }
+                    @for (int j = 0; j < 5 - item.rate; j++)
+                    {
+                        <i class="far fa-star"></i>
+                    }
+                </div>
+                @Html.ActionLink("Product details", "Details", new { Id = item.IdProduct }, new { @class = "btn_details" })
+            </div>
+        </div>
+    }
+}
+        </div>
+    </nav>
+</div>
+
+
+
+    <section class="checkout-orders" id="checkout-orders">
+
+        <form action="" method="POST">
+            <div class="flex">
+                <div class="inputBox">
+                    <span>your name :</span>
+                    <input type="text" name="name" placeholder="enter your name" class="box" required>
+                </div>
+
+                <div class="inputBox">
+                    <span>your email :</span>
+                    <input type="email" name="email" placeholder="enter your email" class="box" required>
+                </div>
+                <div class="inputBox">
+                    <span>address:</span>
+                    <input type="text" name="address" class="box" required>
+                </div>
+                <div class="inputBox">
+                    <span>city :</span>
+                    <input type="text" name="city" class="box" required>
+                </div>
+
+            </div>
+            <div class="box-btn">
+                <input type="submit" value="submit" class="btn">
+            </div>
+        </form>
+
+    </section>
+

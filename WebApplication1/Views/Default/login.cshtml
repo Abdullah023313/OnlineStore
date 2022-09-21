@@ -1,0 +1,41 @@
+﻿@using WebApplication1.Models;
+<div class="page_login">
+
+    <div class="form">
+        <span class="title">Login</span>
+        <form action="" method="post">
+           
+            <div class="input-field">
+                <span>@ViewData["error"]</span>
+                <input type="email" name="mail" placeholder="Enter your email" required>
+                <i class="fas fa-envelope"></i>
+            </div>
+            <div class="input-field">
+                <input type="password" name="password" class="password" placeholder="Enter your password" required>
+                <i class="fas fa-lock"></i>
+            </div>
+
+            <div class="checkbox-text">
+                <div class="checkbox-content">
+                    <input type="checkbox" name="Rememberme" id="logCheck" checked>
+                    <label for="logCheck" class="text">Remember me</label>
+                </div>
+                @*Forgot password?*@
+                <a href="#" class="text">        </a>
+            </div>
+
+            <div class="input-field button">
+                <input type="submit" value="Login Now">
+            </div>
+        </form>
+
+        <div class="login-signup">
+            <span class="text">
+                Not a member?
+                <a href="#" class="text signup-link">
+                    @Html.ActionLink("Sign up now", "Signup", new { })
+                </a>
+            </span>
+        </div>
+    </div>
+</div>

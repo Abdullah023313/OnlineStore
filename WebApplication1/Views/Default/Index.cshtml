@@ -1,0 +1,283 @@
+﻿@using WebApplication1.Models;
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@*<div class="insulator" id="insulator"></div>*@
+<aside id="aside">
+    @*<div class="left-arrow" onclick="clickingLeftArrow()">
+        <i class="fas fa-chevron-left"></i>
+    </div>
+    <ul>
+        <li>
+            <div class="parts-top">
+                <h2>Categories</h2>
+                <i class="fas fa-angle-down" id="fa-angle-down"></i>
+            </div>
+            <div class="parts-bottom">
+                <ul>
+                    @foreach (TBProductType item in Model.ProductTypeslist)
+                    {
+                        <li class="item">
+                            <input type="checkbox" id="@item.IdType" name="Categories[]" />
+                            <label for="@item.IdType">@item.type</label>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </li>
+        <li>
+            <div class="parts-top">
+                <h2>Company</h2>
+                <i class="fas fa-angle-down" id="fa-angle-down"></i>
+            </div>
+            <div class="parts-bottom">
+                <ul>
+                    @foreach (TBProduct product in Model.productlist)
+                    {
+                        <li class="item">
+                            <input type="checkbox" id="@product.IdProduct" name="campany[]" />
+                            <label for="@product.IdProduct">@product.company</label>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </li>
+        <li>
+            <h2>Price</h2>
+            <div class="price-input">
+                <div class="field">
+                    <span>Min</span>
+                    <input type="number" class="input-min" value="2500">
+                </div>
+                <div class="separator">-</div>
+                <div class="field">
+                    <span>Max</span>
+                    <input type="number" class="input-max" value="7500">
+                </div>
+            </div>
+            <div class="slider">
+                <div class="progress"></div>
+            </div>
+            <div class="range-input">
+                <input type="range" class="range-min" min="0" max="10000" value="2500" step="100">
+                <input type="range" class="range-max" min="0" max="10000" value="7500" step="100">
+            </div>
+        </li>
+    </ul>*@
+    </aside>
+<header>
+    <nav>
+        <a href="~/Default/Index"><img src="~/images/shopping-cart.png" alt=""></a>
+        <ul id="page" class="page" >
+            <li><a href="#">Main</a></li>
+            <li><a href="#about">who are we</a></li>
+            <li><a href="#contact">contact us</a></li>
+        </ul>
+        <ul>
+            <li id="toggle-menu" onclick="clickingtoggle_menu()" class="fas fa-bars toggle-menu"> <i></i></li>
+            <li><a href="~/Default/Logout"><i class="fas fa-user-times"></i></a></li>
+            <li><a href="~/Default/cart"><i class="fas fa-shopping-cart"></i><sup>@Model.numberProducts</sup> </a></li>
+        </ul>
+    </nav>
+</header>
+<!--  -->
+<!--  -->
+<div class="search">
+    <div class="container">
+        <div class="search-bar">
+            <div class="categ" onclick="clickingCategories()">
+                <h4>All Categories</h4>
+                <form action="~/Default/Index/#Producer" method="post">
+                    <ul id="ulCategories" style="display: none;">
+                        <li><button type="submit" value="" name="search">All Categories</button></li>
+                        @foreach (TBProductType item in Model.ProductTypeslist)
+                        {
+                            <li><button type="submit" value="@item.IdType" name="search"> @item.type</button></li>
+                        }
+                    </ul>
+
+                </form>
+                <i class="fas fa-angle-down" id="fa-angle-down"></i>
+            </div>
+            <form action="~/Default/index/#Producer" method="post">
+                <input type="text" name="search" placeholder="search for items...">
+                <i class="fas fa-search"></i>
+            </form>
+        </div>
+    </div>
+</div>
+<!--  -->
+<!--start Landing  -->
+@Html.Partial("_Landing")
+<!-- End Landing -->
+<!--  -->
+
+<section class="category">
+
+    <h1 class="heading">shop by <span>category</span></h1>
+
+    <div class="box">
+
+            <a class=" ">
+                <img src=~/images/icon-1.png alt="">
+                <h3>laptop</h3>
+            </a>
+
+            <a class=" ">
+                <img src=~/images/icon-2.png alt="">
+                <h3>tv</h3>
+            </a>
+            <a class=" ">
+                <img src=~/images/icon-3.png alt="">
+                <h3>camera</h3>
+            </a>
+
+            <a class=" ">
+                <img src=~/images/icon-4.png alt="">
+                <h3>mouse</h3>
+            </a>
+
+
+            <a class=" ">
+                <img src=~/images/icon-7.png alt="">
+                <h3>phone</h3>
+            </a>
+
+            <a class=" ">
+                <img src=~/images/icon-8.png alt="">
+                <h3>watch</h3>
+            </a>
+
+        </div>
+ 
+</section>
+
+
+<!--  -->
+<!--starts Producer -->
+<h2 class="heading" id="Producer"> LATEST <span>PRODUCTS</span> </h2>
+<section class="Producer container">
+    <!--Start row  -->
+    @foreach (TBProduct product in Model.productlist)
+    {
+        <div class="row">
+            @foreach (var image in Model.Imagelist)
+            {
+                if (image.IdProduct == product.IdProduct)
+                {
+                    <img src=~/images/@image.pathImage alt="">
+                    break;
+                }
+            }
+            <div class="name">@product.name</div>
+            <div class="details">@product.details</div>
+
+            <div class="stars">
+                @for (int i = 0; i < product.rate; i++)
+                {
+                    <i class="fas fa-star"></i>
+                }
+                @for (int i = 0; i < 5 - product.rate; i++)
+                {
+                    <i class="far fa-star"></i>
+                }
+            </div>
+            <div class="circles">
+                @foreach (TBColor color in Model.Colorlist)
+                {
+                    if (color.IdProduct == product.IdProduct)
+                    {
+                        <span class="circle" style="background-color:@color.code"></span>
+                    }
+                }
+            </div>
+            <div class="price">$@product.sellingPrice</div>           
+            <a href="~/Default/Details/@product.IdProduct" class="button">Learn More</a>
+        </div>
+
+    }
+    <!--End row  -->
+</section>
+<!-- start about  -->
+<section class="about">
+
+    <div class="row">
+       <div class="gif">
+           <a href="~/Default/Index/#Producer"><img src="~/images/SAMSUNG_BIG_SAVING_DAYS_S_SERIES_ENG-1500x250.jpg" alt="image"></a>
+           <img  src="~/images/sonyy_gif-1500x250px-AR.gif"  alt="image">
+       </div>
+        <div class="image"  id="about">
+            <img src="~/images/about-img.png" alt="">
+        </div>
+
+        <div class="content" >
+            <h3>who are we?</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam veritatis minus et similique doloribus? Harum molestias tenetur eaque illum quas? Obcaecati nulla in itaque modi magnam ipsa molestiae ullam consequuntur.</p>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- start about  -->
+<!-- start Contact US -->
+<div class="contact" id="contact">
+    <h1 class="heading">Contact <span>Us</span></h1>
+    <div class="container">
+        <div class="icon">
+            <a href="mailto: abdullahjbero@gmail.com" target="_blank"><i class="fas fa-envelope"></i></a>
+            <a href="https://wa.me/+2250757519079?text= 11 "> <i class="fab fa-whatsapp-square"></i></a>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+          <div class="form">
+            <h3 class="msg">Get In Touch</h3>
+            @using (Html.BeginForm("msg", "Default", FormMethod.Post))
+            {
+                <div class="inputBox">
+                    <input type="text" name="name" placeholder="enter your name" required maxlength="50">
+                    <input type="email" value="" name="mail" placeholder="enter your email" required maxlength="50">
+                </div>
+                    <div class="inputBox">
+                        <input type="text" name="Phone" placeholder="Your Phone" required>
+                        <input type="text" name="Subject" placeholder="Subject" required>
+                    </div>
+                    <textarea name="msg" placeholder="enter your message" cols="30" rows="10" required></textarea>
+                    <input type="submit" value="Send Message" class="btn">
+            }
+           </div>
+            <iframe class="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2406.4724946559268!2d36.616476445768015!3d35.925833024018495!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x7f9909e3bd50508!2zMzXCsDU1JzMyLjAiTiAzNsKwMzcnMDkuMiJF!5e0!3m2!1sen!2seg!4v1652948322845!5m2!1sen!2seg"
+                    width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+
+            </iframe>
+        </div>
+    </div>
+</div>
+
+<!-- End Contact US -->
+<!-- Start Footer -->
+<footer>
+    <div class="container">
+
+        <div class="box">
+            <h3>Contact Info</h3>
+            <a href="#"><i class="fas fa-phone"></i> +225 0757519079</a>
+            <a href="#"><i class="fas fa-phone"></i> +963 988 627 945</a>
+            <a href="#"><i class="fas fa-envelope"></i>  abdullahjbero@gmail.com</a>
+            <a href="#"><i class="fas fa-map-marker"></i> Idlib, Syria</a>
+        </div>
+        <div class="box">
+            <h3>Follow Us</h3>
+            <a href="#"><i class="fab fa-facebook-f"></i> Facebook</a>
+            <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+            <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+            <a href="#"><i class="fab fa-linkedin"></i> Linkedin</a>
+        </div>
+    </div>
+    <div class="created">Created By: <span>Abdullah Jabiru & Ammar Nasser</span> | All Rights Reserved &copy; 2022</div>
+
+</footer>
+<!-- End Footer -->

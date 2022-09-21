@@ -1,0 +1,69 @@
+﻿@model IEnumerable<WebApplication1.Models.TBMsg>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutMessagePage.cshtml";
+}
+
+
+<center class= >
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Msg)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.phone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.mail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.subject)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TBUser.username)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Msg)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.phone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.mail)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.subject)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TBUser.username)
+                </td>
+                <td>
+                    <a href="mailto:@Html.DisplayFor(modelItem => item.mail)" target="_blank"><i class="fas fa-envelope"></i></a> |
+                    <a href="https://wa.me/@Html.DisplayFor(modelItem => item.phone)?text=" target="_blank"><i class="fab fa-whatsapp"></i></a> |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.IdMsg })
+                </td>
+            </tr>
+        }
+
+    </table>
+</center>

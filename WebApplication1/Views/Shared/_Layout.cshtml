@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stor</title>
+    <link rel="stylesheet" href="~/css/normalize.css" />
+    <link rel="stylesheet" href="~/Content/mainStyle.css">
+    <link rel="stylesheet" href="~/Content/main.css">
+    <link rel="stylesheet" href="~/Content/details.css">
+    <link rel="stylesheet" href="~/Content/signup_login.css">
+    <link rel="stylesheet" href="~/Content/rate.css">
+    <link rel="stylesheet" href="~/Content/Cart.css">    
+    <link rel="stylesheet" href="~/css/all.min.css">
+
+</head>
+<body>
+   
+    @RenderBody()
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)  
+    <script src="~/Scripts/JavaScript.js"></script>
+</body>
+</html>
